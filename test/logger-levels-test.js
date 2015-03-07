@@ -65,7 +65,7 @@ vows.describe('winston/logger/levels').addBatch({
         },
         "should not interpolate": function (transport, level, msg, meta) {
           assert.strictEqual(msg, util.format('test message %%'));
-          assert.deepEqual(meta, {number: 123});          
+          assert.deepEqual(meta, {number: 123});
         },
       },
       "when passed interpolation strings and a meta object": {
@@ -124,7 +124,7 @@ vows.describe('winston/logger/levels').addBatch({
             }
           };
 
-          var logger = winston.loggers.add('hello243', { });
+          var logger = winston.loggers.logger('hello243', { });
           try {
             logger.setLevels(customLevels.levels);
           } catch (e) {

@@ -17,19 +17,19 @@ var assert = require('assert'),
 vows.describe('winston/container').addBatch({
   "An instance of winston.Container": {
     topic: new winston.Container(),
-    "the add() method": {
+    "the logger() method": {
       topic: function (container) {
-        return container.add('default-test');
+        return container.logger('default-test');
       },
       "should correctly instantiate a Logger": function (logger) {
         assert.instanceOf(logger, winston.Logger);
       },
-      "the get() method": {
+      "the logger() method": {
         topic: function (logger, container) {
           this.callback.apply(this, arguments);
         },
         "should respond with the logger previously created": function (existing, container) {
-          var logger = container.get('default-test');
+          var logger = container.logger('default-test');
           assert.isTrue(existing === logger);
         }
       },
@@ -63,14 +63,14 @@ vows.describe('winston/container').addBatch({
           port: this.port
         })
       ];
-      
+
       this.container = new winston.Container({
         transports: this.transports
       });
-      
+
       return null;
     },
-    "the get() method": {
+    "the logger() method": {
       topic: function (container) {
         var server = http.createServer(function (req, res) {
           res.end();
@@ -79,14 +79,14 @@ vows.describe('winston/container').addBatch({
         server.listen(this.port, this.callback.bind(this, null));
       },
       "should add the logger correctly": function () {
-        this.someLogger = this.container.get('some-logger');
+        this.someLogger = this.container.logger('some-logger');
         assert.isObject(this.someLogger.transports);
         assert.instanceOf(this.someLogger.transports['webhook'], winston.transports.Webhook);
         assert.strictEqual(this.someLogger.transports['webhook'], this.transports[0]);
       },
-      "a second call to get()": {
+      "a second call to logger()": {
         "should respond with the same transport object": function () {
-          this.someOtherLogger = this.container.get('some-other-logger');
+          this.someOtherLogger = this.container.logger('some-other-logger');
 
           assert.isObject(this.someOtherLogger.transports);
           assert.instanceOf(this.someOtherLogger.transports['webhook'], winston.transports.Webhook);
