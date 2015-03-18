@@ -18,7 +18,7 @@ module.exports = function (transport, options) {
     return new Date().toISOString();
   };
 
-  var transport = logger.transports[logger._names[0]];
+  var transport = logger.transports[Object.keys(logger.transports)[0]];
 
   var out = {
     'topic': logger,

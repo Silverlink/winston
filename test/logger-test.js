@@ -415,8 +415,8 @@ vows.describe('winton/logger').addBatch({
       ]
     }),
     "should respond with a proper logger": function (logger) {
-      assert.include(logger._names, 'filelog-info.log');
-      assert.include(logger._names, 'filelog-error.log');
+      assert.include(logger.transports, 'filelog-info.log');
+      assert.include(logger.transports, 'filelog-error.log');
       assert.lengthOf(logger.transports, 2);
     },
     "when one is removed": {
@@ -425,7 +425,7 @@ vows.describe('winton/logger').addBatch({
         return logger;
       },
       "should only have one transport": function (logger) {
-        assert.include(logger._names, 'filelog-info.log');
+        assert.include(logger.transports, 'filelog-info.log');
         assert.lengthOf(logger.transports, 1);
       }
     }
